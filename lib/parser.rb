@@ -1,21 +1,19 @@
 require 'nokogiri'
 
 class Parser
-  attr_reader :filename
+  attr_reader :rants
 
-  def initialize(filename)
-    @filename = filename
+  def initialize(str)
+    @rants = extract(str)
   end
 
   def data
     Nokogiri::HTML(File.open(filename))
   end
 
-  def rants
-    data.css('blockquote').map do |rant|
-      rant.content.strip.gsub /\s+/, ' '
+  def extract(corpus)
+    Nokogiri::HTML(corpus).css('blockquote').map do |str|
+      str.content.strip.gsub /\s+/, ' '
     end
   end
 end
-
-puts Parser.new('data/abe.html').rants
