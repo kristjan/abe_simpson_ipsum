@@ -1,0 +1,9 @@
+#settings.settings.overbar
+  %h1 Abe Simpson Ipsum
+  %label{for: 'paragraphs'} How long will you listen?
+  %input#paragraphs{type: 'text', value: @count}
+  %label{for: 'paragraphs'} paragraphs
+  %a#go.go{href: '#'} Ramble
+#ramble.ramble
+  - @count.times do
+    %p= settings.ipsum.generate_paragraph

@@ -1,4 +1,6 @@
 source :rubygems
 
-gem "rake"
+gem "haml"
 gem "nokogiri"
+gem "rake"
+gem "sinatra"
