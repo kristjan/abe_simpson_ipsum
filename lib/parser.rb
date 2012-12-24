@@ -18,6 +18,21 @@ class Parser
     end
   end
 
+  def generate_paragraph(length=(rand(4) + 2))
+    (0...length).map { generate_sentence }.join(' ')
+  end
+
+  def generate_sentence
+    separator = EOL
+    "".tap do |sentence|
+      begin
+        fragment = random_fragment(separator)
+        sentence.concat "#{fragment} "
+        separator, index = Util.earliest_separator(fragment)
+      end until EOL_SEPARATORS.include?(separator)
+    end
+  end
+
   def parse(str)
     separator = '^' # Beginning of sentence
     begin
@@ -31,5 +46,10 @@ class Parser
       @dictionary[separator] << fragment.strip
       separator = EOL_SEPARATORS.include?(next_separator) ? '^' : next_separator
     end until str.empty?
+  end
+
+  def random_fragment(separator)
+    set = dictionary[separator]
+    set[rand(set.size)]
   end
 end

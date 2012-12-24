@@ -50,4 +50,13 @@ class ParserTest < Test::Unit::TestCase
       assert_equal ["That's unpossible."], p.dictionary[separator]
     end
   end
+
+
+  def test_random_fragment_picks_from_the_right_pool
+    p = Parser.new("")
+    corpus = "Lisa, vampires are make-believe; like elves, gremlins, and Eskimos."
+    p.parse(corpus)
+    assert_equal "like elves,", p.random_fragment(";")
+    assert p.dictionary[","].include?(p.random_fragment(","))
+  end
 end
