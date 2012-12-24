@@ -19,4 +19,20 @@ class ParserTest < Test::Unit::TestCase
     rants = Parser::Util.extract("<blockquote>Abe \t\n Simpson</blockquote>")
     assert_equal "Abe Simpson", rants.first
   end
+
+
+
+  def test_earliest_separator_works
+    str = "I'm Bart Simpson, Who the hell are you?"
+    separator, index = Parser::Util.earliest_separator(str)
+    assert_equal ",", separator
+    assert_equal 16, index
+  end
+
+  def test_earliest_separator_prefers_ellipsis_over_period
+    str = "Long story short..."
+    separator, index = Parser::Util.earliest_separator(str)
+    assert_equal "...", separator
+    assert_equal 16, index
+  end
 end
